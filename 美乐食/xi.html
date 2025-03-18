@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>西苑餐厅</title>
+    <link rel="stylesheet" href="./css/common.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <style>
+        /* 导航栏样式 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.4s ease;
+        }
+
+        nav {
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+            transition: all 0.4s ease;
+        }
+
+        nav.scrolled {
+            padding: 5px 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            position: relative;
+        }
+
+        nav ul li {
+            position: relative;
+            margin: 0 10px;
+        }
+
+        nav ul li a {
+            color: #333;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 10px 15px;
+            display: block;
+            position: relative;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+
+        nav ul li a:hover {
+            color: #d9534f;
+        }
+
+        nav ul .slider {
+            position: absolute;
+            bottom: 0;
+            height: 3px;
+            background-color: #d9534f;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border-radius: 10px;
+        }
+
+        /* 适应滚动后的主内容区域 */
+        body {
+            padding-top: 60px; /* 根据导航栏高度调整 */
+        }
+        
+        /* 边框旋转动画和发光效果 */
+        .box {
+            position: relative;
+            overflow: visible;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+        
+        .box::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff0066, #ffcc00, #00ffcc, #0066ff, #cc00ff);
+            background-size: 400% 400%;
+            z-index: -1;
+            border-radius: 12px;
+            animation: borderGlow 3s ease-in-out infinite, rotate 10s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .box:hover::before {
+            opacity: 1;
+        }
+        
+        @keyframes borderGlow {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        @keyframes rotate {
+            0% {
+                filter: hue-rotate(0deg);
+            }
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
+
+        .poem-container {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            font-family: "楷体", KaiTi, serif;
+            transition: all 0.3s ease;
+        }
+        
+        .poem-container:hover {
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .poem-line {
+            font-size: 18px;
+            line-height: 2;
+            color: #333;
+            text-align: center;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.4s ease;
+        }
+        
+        .poem-container:hover .poem-line {
+            color: #000;
+            opacity: 1 !important;
+            transform: translateX(0) !important;
+            animation: none !important;
+        }
+
+        @keyframes fadeInSlide {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .poem-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #000;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .poem-container:hover .poem-title {
+            transform: scale(1.1);
+            color: #d9534f;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="./index.html">首页</a></li>
+                <li><a href="./ms.html">面食</a></li>
+                <li><a href="./hb.html">汉堡炸鸡</a></li>
+                <li><a href="./zc.html">早餐糕点</a></li>
+                <li><a href="./mlt.html">麻辣烫香锅</a></li>
+                <li><a href="./tp.html">甜品饮品</a></li>
+                <li><a href="./sg.html">水果（捞）</a></li>
+                <li><a href="./sk.html">炸烤串鸭货</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="banner" data-aos="fade-down">
+            <img src="./images/banner.png" alt="">
+        </div>
+        <div class="compact-container">
+            <h1 data-aos="fade-up">西苑餐厅</h1>
+            <div class="compact-grid">
+                <div class="box" data-aos="fade-up" data-aos-delay="100">
+                    <div class="box2">
+                        <img src="./images/10.jpg" alt="">
+                    </div>
+                    <div class="box3">
+                        <div class="box4">
+                            <span>鑫盛坊米线砂锅</span>
+                            <span id="span2">月售9450</span>
+                            <span id="span3">精选好店</span>
+                        </div>
+                        <div class="box5">
+                            <button onclick="showMessageInput(this)">留言</button>
+                            <button onclick="rateItem(this)">评分</button>
+                        </div>
+                        <div class="message-input">
+                            <textarea placeholder="请输入你的留言"></textarea>
+                            <button onclick="submitMessage(this)">提交留言</button>
+                        </div>
+                        <div class="messages"></div>
+                    </div>
+                </div>
+                <div class="box" data-aos="fade-up" data-aos-delay="200">
+                    <div class="box2">
+                        <img src="./images/11.jpg" alt="">
+                    </div>
+                    <div class="box3">
+                        <div class="box4">
+                            <span>淮南牛肉汤</span>
+                            <span id="span2">月售9901</span>
+                            <span id="span3">精选好店</span>
+                        </div>
+                        <div class="box5">
+                            <button onclick="showMessageInput(this)">留言</button>
+                            <button onclick="rateItem(this)">评分</button>
+                        </div>
+                        <div class="message-input">
+                            <textarea placeholder="请输入你的留言"></textarea>
+                            <button onclick="submitMessage(this)">提交留言</button>
+                        </div>
+                        <div class="messages"></div>
+                    </div>
+                </div>
+                <div class="box" data-aos="fade-up" data-aos-delay="300">
+                    <div class="box2">
+                        <img src="./images/12.jpg" alt="">
+                    </div>
+                    <div class="box3">
+                        <div class="box4">
+                            <span>喷喷香小铁板</span>
+                            <span id="span2">月售9900</span>
+                            <span id="span3">精选好店</span>
+                        </div>
+                        <div class="box5">
+                            <button onclick="showMessageInput(this)">留言</button>
+                            <button onclick="rateItem(this)">评分</button>
+                        </div>
+                        <div class="message-input">
+                            <textarea placeholder="请输入你的留言"></textarea>
+                            <button onclick="submitMessage(this)">提交留言</button>
+                        </div>
+                        <div class="messages"></div>
+                    </div>
+                </div>
+                <div class="box" data-aos="fade-up" data-aos-delay="400">
+                    <div class="box2">
+                        <img src="./images/13.jpg" alt="">
+                    </div>
+                    <div class="box3">
+                        <div class="box4">
+                            <span>齐品达烤肉饭</span>
+                            <span id="span2">月售9450</span>
+                            <span id="span3">精选好店</span>
+                        </div>
+                        <div class="box5">
+                            <button onclick="showMessageInput(this)">留言</button>
+                            <button onclick="rateItem(this)">评分</button>
+                        </div>
+                        <div class="message-input">
+                            <textarea placeholder="请输入你的留言"></textarea>
+                            <button onclick="submitMessage(this)">提交留言</button>
+                        </div>
+                        <div class="messages"></div>
+                    </div>
+                </div>
+                <div class="box" data-aos="fade-up" data-aos-delay="500">
+                    <div class="box2">
+                        <img src="./images/14.jpg" alt="">
+                    </div>
+                    <div class="box3">
+                        <div class="box4">
+                            <span>正宗杭州小笼包</span>
+                            <span id="span2">月售9450</span>
+                            <span id="span3">精选好店</span>
+                        </div>
+                        <div class="box5">
+                            <button onclick="showMessageInput(this)">留言</button>
+                            <button onclick="rateItem(this)">评分</button>
+                        </div>
+                        <div class="message-input">
+                            <textarea placeholder="请输入你的留言"></textarea>
+                            <button onclick="submitMessage(this)">提交留言</button>
+                        </div>
+                        <div class="messages"></div>
+                    </div>
+                </div>
+                <div class="box" data-aos="fade-up" data-aos-delay="600">
+                    <div class="box2">
+                        <img src="./images/60.jpg" alt="">
+                    </div>
+                    <div class="box3">
+                        <div class="box4">
+                            <span>鑫盛坊米线砂锅</span>
+                            <span id="span2">月售9450</span>
+                            <span id="span3">精选好店</span>
+                        </div>
+                        <div class="box5">
+                            <button onclick="showMessageInput(this)">留言</button>
+                            <button onclick="rateItem(this)">评分</button>
+                        </div>
+                        <div class="message-input">
+                            <textarea placeholder="请输入你的留言"></textarea>
+                            <button onclick="submitMessage(this)">提交留言</button>
+                        </div>
+                        <div class="messages"></div>
+                    </div>
+                </div>
+                <div class="box" data-aos="fade-up" data-aos-delay="700">
+                    <div class="box2">
+                        <img src="./images/11.jpg" alt="">
+                    </div>
+                    <div class="box3">
+                        <div class="box4">
+                            <span>淮南牛肉汤</span>
+                            <span id="span2">月售9901</span>
+                            <span id="span3">精选好店</span>
+                        </div>
+                        <div class="box5">
+                            <button onclick="showMessageInput(this)">留言</button>
+                            <button onclick="rateItem(this)">评分</button>
+                        </div>
+                        <div class="message-input">
+                            <textarea placeholder="请输入你的留言"></textarea>
+                            <button onclick="submitMessage(this)">提交留言</button>
+                        </div>
+                        <div class="messages"></div>
+                    </div>
+                </div>
+                <div class="box" data-aos="fade-up" data-aos-delay="800">
+                    <div class="box2">
+                        <img src="./images/12.jpg" alt="">
+                    </div>
+                    <div class="box3">
+                        <div class="box4">
+                            <span>喷喷香小铁板</span>
+                            <span id="span2">月售9900</span>
+                            <span id="span3">精选好店</span>
+                        </div>
+                        <div class="box5">
+                            <button onclick="showMessageInput(this)">留言</button>
+                            <button onclick="rateItem(this)">评分</button>
+                        </div>
+                        <div class="message-input">
+                            <textarea placeholder="请输入你的留言"></textarea>
+                            <button onclick="submitMessage(this)">提交留言</button>
+                        </div>
+                        <div class="messages"></div>
+                    </div>
+                </div>
+                <div class="box" data-aos="fade-up" data-aos-delay="900">
+                    <div class="box2">
+                        <img src="./images/13.jpg" alt="">
+                    </div>
+                    <div class="box3">
+                        <div class="box4">
+                            <span>齐品达烤肉饭</span>
+                            <span id="span2">月售9450</span>
+                            <span id="span3">精选好店</span>
+                        </div>
+                        <div class="box5">
+                            <button onclick="showMessageInput(this)">留言</button>
+                            <button onclick="rateItem(this)">评分</button>
+                        </div>
+                        <div class="message-input">
+                            <textarea placeholder="请输入你的留言"></textarea>
+                            <button onclick="submitMessage(this)">提交留言</button>
+                        </div>
+                        <div class="messages"></div>
+                    </div>
+                </div>
+                <div class="box" data-aos="fade-up" data-aos-delay="1000">
+                    <div class="box2">
+                        <img src="./images/14.jpg" alt="">
+                    </div>
+                    <div class="box3">
+                        <div class="box4">
+                            <span>正宗杭州小笼包</span>
+                            <span id="span2">月售9450</span>
+                            <span id="span3">精选好店</span>
+                        </div>
+                        <div class="box5">
+                            <button onclick="showMessageInput(this)">留言</button>
+                            <button onclick="rateItem(this)">评分</button>
+                        </div>
+                        <div class="message-input">
+                            <textarea placeholder="请输入你的留言"></textarea>
+                            <button onclick="submitMessage(this)">提交留言</button>
+                        </div>
+                        <div class="messages"></div>
+                    </div>
+                </div>
+                <div class="box" data-aos="fade-up" data-aos-delay="1100">
+                    <div class="box2">
+                        <img src="./images/15.jpg" alt="">
+                    </div>
+                    <div class="box3">
+                        <div class="box4">
+                            <span>一品茶香鸡</span>
+                            <span id="span2">月售9450</span>
+                            <span id="span3">精选好店</span>
+                        </div>
+                        <div class="box5">
+                            <button onclick="showMessageInput(this)">留言</button>
+                            <button onclick="rateItem(this)">评分</button>
+                        </div>
+                        <div class="message-input">
+                            <textarea placeholder="请输入你的留言"></textarea>
+                            <button onclick="submitMessage(this)">提交留言</button>
+                        </div>
+                        <div class="messages"></div>
+                    </div>
+                </div>
+                <div class="box" data-aos="fade-up" data-aos-delay="1200">
+                    <div class="box2">
+                        <img src="./images/16.jpg" alt="">
+                    </div>
+                    <div class="box3">
+                        <div class="box4">
+                            <span>渔舟烤鱼</span>
+                            <span id="span2">月售9450</span>
+                            <span id="span3">精选好店</span>
+                        </div>
+                        <div class="box5">
+                            <button onclick="showMessageInput(this)">留言</button>
+                            <button onclick="rateItem(this)">评分</button>
+                        </div>
+                        <div class="message-input">
+                            <textarea placeholder="请输入你的留言"></textarea>
+                            <button onclick="submitMessage(this)">提交留言</button>
+                        </div>
+                        <div class="messages"></div>
+                    </div>
+                </div>
+                <div class="box" data-aos="fade-up" data-aos-delay="1300">
+                    <div class="box2">
+                        <img src="./images/17.jpg" alt="">
+                    </div>
+                    <div class="box3">
+                        <div class="box4">
+                            <span>香香园炸鸡烤串</span>
+                            <span id="span2">月售9450</span>
+                            <span id="span3">精选好店</span>
+                        </div>
+                        <div class="box5">
+                            <button onclick="showMessageInput(this)">留言</button>
+                            <button onclick="rateItem(this)">评分</button>
+                        </div>
+                        <div class="message-input">
+                            <textarea placeholder="请输入你的留言"></textarea>
+                            <button onclick="submitMessage(this)">提交留言</button>
+                        </div>
+                        <div class="messages"></div>
+                    </div>
+                </div>
+                <div class="box" data-aos="fade-up" data-aos-delay="1400">
+                    <div class="box2">
+                        <img src="./images/18.jpg" alt="">
+                    </div>
+                    <div class="box3">
+                        <div class="box4">
+                            <span>喜多顺水饺混沌</span>
+                            <span id="span2">月售9450</span>
+                            <span id="span3">精选好店</span>
+                        </div>
+                        <div class="box5">
+                            <button onclick="showMessageInput(this)">留言</button>
+                            <button onclick="rateItem(this)">评分</button>
+                        </div>
+                        <div class="message-input">
+                            <textarea placeholder="请输入你的留言"></textarea>
+                            <button onclick="submitMessage(this)">提交留言</button>
+                        </div>
+                        <div class="messages"></div>
+                    </div>
+                </div>
+                <div class="box" data-aos="fade-up" data-aos-delay="1500">
+                    <div class="box2">
+                        <img src="./images/19.jpg" alt="">
+                    </div>
+                    <div class="box3">
+                        <div class="box4">
+                            <span>韩式料理</span>
+                            <span id="span2">月售9450</span>
+                            <span id="span3">精选好店</span>
+                        </div>
+                        <div class="box5">
+                            <button onclick="showMessageInput(this)">留言</button>
+                            <button onclick="rateItem(this)">评分</button>
+                        </div>
+                        <div class="message-input">
+                            <textarea placeholder="请输入你的留言"></textarea>
+                            <button onclick="submitMessage(this)">提交留言</button>
+                        </div>
+                        <div class="messages"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 一切版权归作者所有</p>
+    </footer>
+    <script src="./js/script.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100,
+            easing: 'ease-out-cubic'
+        });
+        
+        // 导航栏滑动效果
+        const nav = document.querySelector('nav');
+        const slider = document.createElement('div');
+        slider.className = 'slider';
+        nav.querySelector('ul').appendChild(slider);
+
+        // 初始设置滑块位置在当前页面对应的导航项下
+        const currentPage = window.location.pathname.split('/').pop();
+        const navItems = document.querySelectorAll('nav ul li a');
+        
+        let activeItem = navItems[0]; // 默认首页
+        
+        navItems.forEach(item => {
+            // 检查当前页面
+            if (item.getAttribute('href') === './' + currentPage || 
+                (currentPage === '' && item.getAttribute('href') === './index.html')) {
+                activeItem = item;
+            }
+            
+            // 鼠标悬停效果
+            item.addEventListener('mouseenter', function() {
+                moveSlider(this);
+            });
+        });
+        
+        // 鼠标离开导航栏时，滑块回到当前活动页面
+        nav.querySelector('ul').addEventListener('mouseleave', function() {
+            moveSlider(activeItem);
+        });
+        
+        // 初始化滑块位置
+        setTimeout(() => {
+            moveSlider(activeItem);
+        }, 100);
+        
+        // 窗口滚动时改变导航栏样式
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+        
+        // 移动滑块函数
+        function moveSlider(item) {
+            const itemRect = item.getBoundingClientRect();
+            const navRect = nav.getBoundingClientRect();
+            
+            slider.style.width = itemRect.width + 'px';
+            slider.style.left = (itemRect.left - navRect.left) + 'px';
+        }
+    </script>
+    <div class="poem-container" data-aos="fade-right">
+        <div class="poem-title">悯农</div>
+        <div class="poem-line" data-aos="fade-right" data-aos-delay="100">锄禾日当午，</div>
+        <div class="poem-line" data-aos="fade-right" data-aos-delay="200">汗滴禾下土。</div>
+        <div class="poem-line" data-aos="fade-right" data-aos-delay="300">谁知盘中餐，</div>
+        <div class="poem-line" data-aos="fade-right" data-aos-delay="400">粒粒皆辛苦。</div>
+    </div>
+</body>
+
+</html>

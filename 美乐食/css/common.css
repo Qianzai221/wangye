@@ -1,0 +1,531 @@
+body {
+    padding: 0;
+    margin: 0;
+    min-height: 100vh;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/nongmin.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+    z-index: -1;
+}
+
+/* 为了确保内容可读性，添加一个半透明的遮罩 */
+main {
+    position: relative;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px 0;
+    min-height: calc(100vh - 180px); /* 减去header和footer的高度 */
+}
+
+header {
+    background: linear-gradient(to right, rgba(27, 42, 96, 0.95), rgba(27, 42, 96, 0.95));
+    height: 80px;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    animation: slideInDown 0.8s ease-out;
+}
+
+header nav {
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+header nav ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header nav ul li {
+    list-style: none;
+    padding: 10px 20px;
+}
+
+/* header nav ul li:hover {
+    border-bottom: 2px solid #E4DBB1;
+} */
+header nav ul li a:hover {
+    padding-bottom: 2px;
+    color: #E4DBB1;
+    border-bottom: 1px solid #E4DBB1;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+}
+
+footer {
+    background-color: #343638;
+    text-align: center;
+    padding: 10px 20px;
+    margin-top: 20px;
+}
+
+footer p {
+    color: #fff;
+    font-size: 18px;
+}
+
+.banner {
+    width: 100%;
+    animation: zoomIn 1s ease-out;
+}
+
+.banner img {
+    width: 100%;
+}
+
+/* 导航栏样式 */
+nav {
+    background: linear-gradient(to right, #2193b0, #6dd5ed);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    padding: 10px 0;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+nav ul li a {
+    position: relative;
+    transition: all 0.3s ease;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 5px 10px;
+}
+
+nav ul li a:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 50%;
+    background-color: white;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+nav ul li a:hover {
+    color: white;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+nav ul li a:hover:after {
+    width: 100%;
+}
+
+/* 页脚样式 */
+footer {
+    background: linear-gradient(to right, #2193b0, #6dd5ed);
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 50px;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+}
+
+footer p {
+    font-size: 1.1em;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    margin: 0;
+}
+
+/* 全局动画效果 */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 容器样式优化 */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    max-width: 1400px;
+    padding: 15px;
+    margin: 20px auto;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.container:hover {
+    transform: translateY(-5px);
+}
+
+/* 标题样式优化 */
+h1 {
+    text-align: center;
+    color: #2193b0;
+    font-size: 2.5em;
+    margin: 30px 0;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(to right, #2193b0, #6dd5ed);
+    border-radius: 3px;
+}
+
+/* 商品卡片样式优化 */
+.box {
+    width: calc(20% - 24px);
+    min-width: 200px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    margin: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.box2 {
+    position: relative;
+    overflow: hidden;
+    padding-top: 66.67%; /* 3:2 比例 */
+}
+
+.box2 img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.5s ease;
+}
+
+.box:hover .box2 img {
+    transform: scale(1.1);
+    filter: brightness(1.1);
+}
+
+.box3 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+.box4 {
+    margin-bottom: 15px;
+}
+
+.box4 span:first-child {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #2193b0;
+    margin-bottom: 5px;
+    display: block;
+}
+
+#span2 {
+    font-size: 0.9em;
+    color: #666;
+}
+
+#span3 {
+    display: inline-block;
+    padding: 4px 12px;
+    background: linear-gradient(to right, #2193b0, #6dd5ed);
+    color: white;
+    border-radius: 20px;
+    font-size: 0.85em;
+    margin-top: 8px;
+}
+
+/* 按钮样式优化 */
+.box5 {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.box5 button {
+    flex: 1;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.box5 button:first-child {
+    background: linear-gradient(to right, #2193b0, #6dd5ed);
+}
+
+.box5 button:last-child {
+    background: linear-gradient(to right, #6dd5ed, #2193b0);
+}
+
+.box5 button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(33, 147, 176, 0.3);
+}
+
+/* 留言框样式优化 */
+.message-input {
+    display: none;
+    margin-top: 15px;
+}
+
+.message-input textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #2193b0;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    resize: vertical;
+}
+
+.message-input button {
+    width: 100%;
+    padding: 8px;
+    background: linear-gradient(to right, #2193b0, #6dd5ed);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.message-input button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(33, 147, 176, 0.3);
+}
+
+/* 响应式布局 */
+@media (max-width: 1200px) {
+    .box {
+        width: calc(25% - 24px);
+    }
+    .compact-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+}
+
+@media (max-width: 992px) {
+    .box {
+        width: calc(33.33% - 24px);
+    }
+}
+
+@media (max-width: 768px) {
+    .box {
+        width: calc(50% - 24px);
+    }
+    
+    h1 {
+        font-size: 2em;
+    }
+    .compact-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+    .compact-container {
+        padding: 15px;
+        margin: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .box {
+        width: 100%;
+    }
+    
+    .container {
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 1.8em;
+    }
+}
+
+/* 动画类 */
+.fade-up {
+    animation: fadeIn 0.8s ease forwards;
+}
+
+.scale-in {
+    animation: scaleIn 0.5s ease forwards;
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* 二三式布局 */
+.layout-2-3 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    width: 100%;
+}
+
+.layout-2 {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.layout-2 .box {
+    width: calc(50% - 15px);
+    max-width: 500px;
+}
+
+.layout-3 {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
+}
+
+.layout-3 .box {
+    width: calc(33.33% - 20px);
+    max-width: 380px;
+}
+
+/* 响应式布局调整 */
+@media (max-width: 992px) {
+    .layout-2 {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .layout-2 .box {
+        width: 100%;
+        max-width: 600px;
+    }
+    
+    .layout-3 {
+        flex-wrap: wrap;
+    }
+    
+    .layout-3 .box {
+        width: calc(50% - 15px);
+        max-width: 450px;
+    }
+}
+
+@media (max-width: 768px) {
+    .layout-3 .box {
+        width: 100%;
+        max-width: 600px;
+    }
+    
+    .container {
+        padding: 15px;
+    }
+}
+
+/* 开场动画 */
+@keyframes slideInDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* 紧凑布局样式 */
+.compact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.compact-container {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 1400px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
